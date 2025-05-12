@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const predictionsController = require("../controllers/predictions");
+const predictionsController = require("../controllers/prediction");
 const authController = require("../controllers/authentication");
 const router = Router();
 
