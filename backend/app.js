@@ -3,6 +3,7 @@ const globalErrorHandler = require("./controllers/error");
 const estateRouter = require("./routes/estate");
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/user");
+const predictionRouter = require("./routes/prediction");
 const app = express();
 
 // Middlewares
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/estate", estateRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/prediction", predictionRouter);
 
 // Error handling
 app.use(globalErrorHandler);
