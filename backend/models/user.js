@@ -2,8 +2,9 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const { Schema } = mongoose;
 
-const UserSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Field name is required."],
@@ -54,7 +55,10 @@ const UserSchema = mongoose.Schema({
     },
     likedEstates: [String],
     estates: [String],
-    predictions: [String],
+    predictions: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Prediction'
+    }],
     joinedAt: Date,
     changedPasswordAt: Date,
     resetOTP: String,
