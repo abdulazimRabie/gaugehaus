@@ -11,9 +11,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRouter);
-app.use("/api/estate", estateRouter);
+app.use("/api/estates", estateRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/prediction", predictionRouter);
+app.use("/api/predictions", predictionRouter);
 
 // Error handling
 app.use(globalErrorHandler);
