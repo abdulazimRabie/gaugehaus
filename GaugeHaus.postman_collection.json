@@ -1,0 +1,599 @@
+{
+	"info": {
+		"_postman_id": "32f95e8f-6b17-46b9-9ab4-ff94a2910b18",
+		"name": "GaugeHaus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31592980"
+	},
+	"item": [
+		{
+			"name": "Estates",
+			"item": []
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/6823b36c8a8273bc8e2601b9",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"6823b36c8a8273bc8e2601b9"
+							]
+						},
+						"description": "This endpoint retrieves the details of a specific user with the given ID.\n\n### Request\n\n#### Request URL\n\n```\nGET {{url}}/users/6823b36c8a8273bc8e2601b9\n\n ```\n\n### Response\n\nUpon a successful request, the server will respond with a status code of 200 and a JSON object in the response body containing the user details. The response will include the user's ID, name, email, image, liked estates, estates, predictions, and the date the user joined.\n\nExample Response Body:\n\n``` json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"6823b36c8a8273bc8e2601b9\",\n            \"name\": \"azima\",\n            \"email\": \"azima@rabie.com\",\n            \"image\": \"avatar_default.jpg\",\n            \"likedEstates\": [],\n            \"estates\": [],\n            \"predictions\": [],\n            \"joinedAt\": \"2025-05-13T21:02:36.663Z\",\n            \"__v\": 0\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"about\": \"We are a super team\",\n    \"location\": \"Cairo\",\n    \"phoneNumber\": \"01123456789\",\n    \"birthDate\": \"2003-04-04\",\n    \"username\": \"new-user-name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/updateMe",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"updateMe"
+							]
+						},
+						"description": "### Update User Information\n\nThis endpoint is used to update the user's information.\n\n#### Request Body\n\n- **about**: (string) A brief description about the user.\n    \n- **location**: (string) The user's location.\n    \n- **phoneNumber**: (string) The user's phone number.\n    \n- **birthDate**: (string) The user's date of birth.\n    \n- **username**: (string) The user's username.\n    \n\n#### Response\n\nUpon successful update, the response will include:\n\n- **status**: (string) Indicates the status of the request.\n    \n- **data**: (object) Contains the updated user information.\n    \n    - **user**: (object) User details including the updated fields.\n        \n\nExample:\n\n``` json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"6823b93627ef4a8464b26177\",\n            \"name\": \"super\",\n            \"email\": \"super@team.com\",\n            \"image\": \"avatar_default.jpg\",\n            \"likedEstates\": [],\n            \"estates\": [],\n            \"predictions\": [\n                \"6823bbb767719b72a5933b7e\"\n            ],\n            \"joinedAt\": \"2025-05-13T21:27:18.948Z\",\n            \"__v\": 1,\n            \"about\": \"We are a super team\",\n            \"location\": \"Cairo\",\n            \"phoneNumber\": \"01123456789\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Me",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/deleteMe",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"deleteMe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Predictions",
+			"item": [
+				{
+					"name": "Predict Price",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"city\": \"Sheikh Zayed\", \n    \"property_type\": \"Apartment\", \n    \"furnished\": \"Yes\", \n    \"delivery_term\": \"Finished\", \n    \"bedrooms\": 3, \n    \"bathrooms\": 2, \n    \"area\": 150.0, \n    \"level\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/predictions/predict",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"predictions",
+								"predict"
+							]
+						},
+						"description": "### Predict Property Price\n\nThis endpoint allows you to predict the price of a property based on various parameters.\n\n#### Request Body\n\n- city (string): The name of the city where the property is located.\n    \n- property_type (string): The type of property, e.g., Apartment, Villa, etc.\n    \n- furnished (string): Indicates whether the property is furnished or not.\n    \n- delivery_term (string): The delivery status of the property, e.g., Finished, Unfinished, etc.\n    \n- bedrooms (integer): The number of bedrooms in the property.\n    \n- bathrooms (integer): The number of bathrooms in the property.\n    \n- area (integer): The total area of the property in square meters.\n    \n- level (integer): The level or floor at which the property is located.\n    \n\n#### Response\n\nThe response will be in JSON format with the following schema:\n\n``` json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"prediction\": {\n            \"price\": 3474970.53,\n            \"price_per_sqm\": 23166.4702\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Predict [Model] [Fast API]",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"city\": \"Sheikh Zayed\", \n    \"property_type\": \"Apartment\", \n    \"furnished\": \"Yes\", \n    \"delivery_term\": \"Finished\", \n    \"bedrooms\": 3, \n    \"bathrooms\": 2, \n    \"area\": 150.0, \n    \"level\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://0.0.0.0:4001/predict",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "4001",
+							"path": [
+								"predict"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Prediction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Test Prediction for super team\",\n    \"city\": \"Imbaba\",\n    \"propertyType\": \"Duplex\",\n    \"furnished\": \"Yes\", \n    \"deliveryTerm\": \"Finished\", \n    \"bedrooms\": 333, \n    \"bathrooms\": 1, \n    \"area\": 150.0, \n    \"level\": 2,\n    \"price\": 123456\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/predictions/save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"predictions",
+								"save"
+							]
+						},
+						"description": "## Save Prediction\n\nThis endpoint allows you to save a prediction for a property.\n\n### Request Body\n\n- title (string): The title of the prediction.\n    \n- city (string): The city where the property is located.\n    \n- propertyType (string): The type of the property.\n    \n- furnished (string): Indicates if the property is furnished.\n    \n- deliveryTerm (string): The delivery term of the property.\n    \n- bedrooms (number): The number of bedrooms in the property.\n    \n- bathrooms (number): The number of bathrooms in the property.\n    \n- area (number): The area of the property in square meters.\n    \n- level (number): The level of the property.\n    \n- price (number): The price of the property.\n    \n\n#### Example\n\n``` json\n{\n    \"title\": \"Test Prediction for super team\",\n    \"city\": \"Imbaba\",\n    \"propertyType\": \"Duplex\",\n    \"furnished\": \"Yes\",\n    \"deliveryTerm\": \"Finished\",\n    \"bedrooms\": 333,\n    \"bathrooms\": 1,\n    \"area\": 150,\n    \"level\": 2,\n    \"price\": 123456\n}\n### Response\n- status (string): The status of the response.\n- data (object): The prediction data.\n  - prediction (object): The saved prediction details.\n    - title (string): The title of the prediction.\n    - city (string): The city of the property.\n    - propertyType (string): The type of the property.\n    - furnished (string): Indicates if the property is furnished.\n    - deliveryTerm (string): The delivery term of the property.\n    - bedrooms (number): The number of bedrooms in the property.\n    - bathrooms (number): The number of bathrooms in the property.\n    - area (number): The area of the property in square meters.\n    - level (number): The level of the property.\n    - price (number): The price of the property.\n    - pricePerSqm (number): The price per square meter.\n    - owner (string): The owner of the property.\n    - _id (string): The unique ID of the prediction.\n    - createdAt (string): The creation date of the prediction.\n    - updatedAt (string): The last update date of the prediction.\n    - __v (number): Version control field.\n#### Example\n```json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"prediction\": {\n            \"title\": \"Test Prediction for super team\",\n            \"city\": \"Imbaba\",\n            \"propertyType\": \"Duplex\",\n            \"furnished\": \"Yes\",\n            \"deliveryTerm\": \"Finished\",\n            \"bedrooms\": 333,\n            \"bathrooms\": 1,\n            \"area\": 150,\n            \"level\": 2,\n            \"price\": 123456,\n            \"pricePerSqm\": 823.04,\n            \"owner\": \"6823b93627ef4a8464b26177\",\n            \"_id\": \"6823c0411c2f7ab30db9a0b9\",\n            \"createdAt\": \"2025-05-13T21:57:21.764Z\",\n            \"updatedAt\": \"2025-05-13T21:57:21.764Z\",\n            \"__v\": 0\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Prediction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/predictions/6823fb6ee356f76cc2dbc26d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"predictions",
+								"6823fb6ee356f76cc2dbc26d"
+							]
+						},
+						"description": "The endpoint retrieves the prediction details for a specific ID.  \n  \n**Response :**\n\n``` json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"prediction\": {\n            \"_id\": \"6823fb6ee356f76cc2dbc26d\",\n            \"title\": \"Test Prediction for super team\",\n            \"city\": \"Imbaba\",\n            \"propertyType\": \"Duplex\",\n            \"furnished\": \"Yes\",\n            \"deliveryTerm\": \"Finished\",\n            \"bedrooms\": 333,\n            \"bathrooms\": 1,\n            \"area\": 150,\n            \"level\": 2,\n            \"price\": 123456,\n            \"pricePerSqm\": 823.04,\n            \"createdAt\": \"2025-05-14T02:09:50.995Z\",\n            \"updatedAt\": \"2025-05-14T02:09:50.995Z\",\n            \"__v\": 0\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Predictions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/predictions/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"predictions",
+								""
+							]
+						},
+						"description": "### Get Predictions\n\nThis endpoint retrieves a list of predictions.\n\n#### Request\n\n- Method: GET\n    \n- URL: `{{url}}/predictions/`\n    \n\n#### Response\n\nUpon a successful request, the server will respond with a status code of 200 and a JSON object with the following structure:\n\n``` json\n{\n    \"status\": \"success\",\n    \"data\": {\n        \"predictions\": [\n            {\n                \"_id\": \"6823fb6ee356f76cc2dbc26d\",\n                \"title\": \"Test Prediction for super team\",\n                \"city\": \"Imbaba\",\n                \"propertyType\": \"Duplex\",\n                \"furnished\": \"Yes\",\n                \"deliveryTerm\": \"Finished\",\n                \"bedrooms\": 333,\n                \"bathrooms\": 1,\n                \"area\": 150,\n                \"level\": 2,\n                \"price\": 123456,\n                \"pricePerSqm\": 823.04,\n                \"createdAt\": \"2025-05-14T02:09:50.995Z\",\n                \"updatedAt\": \"2025-05-14T02:09:50.995Z\",\n                \"__v\": 0\n            }\n        ]\n    }\n}\n\n ```\n\nThe `predictions` array contains objects with details such as title, city, property type, furnished status, delivery term, bedrooms, bathrooms, area, level, price, price per square meter, and timestamps for creation and update."
+					},
+					"response": []
+				},
+				{
+					"name": "Prediction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/predictions/6823fb6ee356f76cc2dbc26d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"predictions",
+								"6823fb6ee356f76cc2dbc26d"
+							]
+						},
+						"description": "This endpoint sends an HTTP DELETE request to delete the prediction with the ID \"6823fb6ee356f76cc2dbc26d\" from the server.\n\n### Request Body\n\nThis request does not contain a request body.\n\n### Response\n\n- Status: 204\n    \n- Content-Type: text/xml\n    \n- The response body is null."
+					},
+					"response": []
+				},
+				{
+					"name": "Prediction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"new TITLE for FAISL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/predictions/6822519046b08d7017c8ebe2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"predictions",
+								"6822519046b08d7017c8ebe2"
+							]
+						},
+						"description": "This endpoint makes an HTTP PATCH request to update a specific prediction with the provided ID. The request body should be in raw format and include the updated \"title\" field for the prediction.\n\n### Request Body\n\n- title: (string) The new title for the prediction.\n    \n\n### Response\n\nThe response will include the updated details of the prediction after the PATCH request is processed."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"azim\",\n    \"email\": \"azim@rabie.com\",\n    \"password\": \"pass1234\",\n    \"confirmedPassword\": \"pass1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						},
+						"description": "### Sign In\n\nThis endpoint allows users to sign in by providing their name, email, password, and confirmed password.\n\n#### Request Body\n\n- `name` (string, required): The name of the user.\n    \n- `email` (string, required): The email address of the user.\n    \n- `password` (string, required): The password for the user's account.\n    \n- `confirmedPassword` (string, required): The confirmed password for the user's account.\n    \n\n#### Response\n\n- Status: 201 Created\n    \n- Content-Type: application/json\n    \n\n``` json\n{\n    \"status\": \"\",\n    \"token\": \"\",\n    \"data\": {\n        \"user\": {\n            \"name\": \"\",\n            \"email\": \"\",\n            \"image\": \"\",\n            \"likedEstates\": [],\n            \"estates\": [],\n            \"predictions\": [],\n            \"active\": true,\n            \"_id\": \"\",\n            \"joinedAt\": \"\",\n            \"__v\": 0\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"azim@rabie.com\",\n    \"password\": \"pass1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "**Response :**  \n\n``` json\n{\n    \"status\": \"success\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aW1AcmFiaWUuY29tIiwiaWF0IjoxNzQ3MTg3NzIyLCJleHAiOjE3NTQ5NjM3MjJ9.iQzko6xju4H2YAQANrw8CQckQsHFyGMQDT3R2uRsXUs\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"6823f630e356f76cc2dbc25e\",\n            \"name\": \"azim\",\n            \"email\": \"azim@rabie.com\",\n            \"image\": \"avatar_default.jpg\",\n            \"likedEstates\": [],\n            \"estates\": [],\n            \"predictions\": [],\n            \"joinedAt\": \"2025-05-14T01:47:28.304Z\",\n            \"__v\": 0\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"azim@rabie.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/forgetPassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"forgetPassword"
+							]
+						},
+						"description": "### Forget Password Request\n\nThis endpoint is used to initiate the forget password process by providing the user's email.\n\n#### Request Body\n\n- email (string, required): The email address of the user for which the forget password process needs to be initiated.\n    \n\n#### Response\n\nThe response will be in JSON format with the following schema:\n\n``` json\n{\n    \"status\": \"success\",\n    \"message\": \"OTP is sent to azim@rabie.com successfully.\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"azim@rabie.com\",\n    \"otp\": \"363972\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/verifyOTP",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"verifyOTP"
+							]
+						},
+						"description": "The endpoint `/auth/verifyOTP` is a POST request used to verify the OTP (One Time Password) for a given email address.\n\n### Request\n\nThe request body should be in JSON format and include the following parameters:\n\n- `email` (string): The email address for which the OTP is to be verified.\n    \n- `otp` (string): The OTP to be verified.\n    \n\nExample:\n\n``` json\n{\n    \"email\": \"example@email.com\",\n    \"otp\": \"123456\"\n}\n### Response\nThe response is in JSON format with the following schema:\n```json\n{\n    \"status\": \"\",\n    \"data\": {\n        \"validOTP\": true\n    }\n}\n\n ```\n\n- `status` (string): Represents the status of the OTP verification.\n    \n- `data` (object): Contains the result of the OTP verification."
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"azim@rabie.com\",\n    \"password\": \"abdo1234\",\n    \"confirmedPassword\": \"abdo1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/resetPassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"resetPassword"
+							]
+						},
+						"description": "### Reset Password\n\nThis endpoint is used to reset the password for a user account.\n\n#### Request Body\n\n- email (string, required): The email address of the user.\n    \n- password (string, required): The new password for the user account.\n    \n- confirmedPassword (string, required): The confirmed new password for the user account.\n    \n\n#### Response\n\n- status (string): The status of the password reset operation.\n    \n- message (string): A message related to the password reset operation.\n    \n- token (string): A token associated with the password reset.\n    \n\n``` json\n{\n    \"status\": \"success\",\n    \"message\": \"Password reseted successfully.\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF6aW1AcmFiaWUuY29tIiwiaWF0IjoxNzQ3MTg4MTIzLCJleHAiOjE3NTQ5NjQxMjN9.mOdF_JqmRJ5ytxK7Z-5LNJkfD6VEbEdYVvCPT5aEEcI\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\": \"abdo1234\",\n    \"password\": \"pass1234\",\n    \"confirmedPassword\": \"pass1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/updatePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"updatePassword"
+							]
+						},
+						"description": "### Update Password\n\nThis endpoint is used to update the password for the user.\n\n#### Request Body\n\n- oldPassword (string, required): The current password of the user.\n    \n- password (string, required): The new password for the user.\n    \n- confirmedPassword (string, required): The confirmed new password for the user.\n    \n\n#### Response\n\nThe response for this request can be represented as a JSON schema:\n\n``` json\n{\n    \"status\": \"success\",\n    \"message\": \"Password has been changed successfully.\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpIjoiYXppbUByYWJpZS5jb20iLCJpYXQiOjE3NDcxODgyMDksImV4cCI6MTc1NDk2NDIwOX0.rcANnw8xDhZ3DbZF7Wdgyp2W-RUV0-dZJgqaYZOqGwU\"\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
