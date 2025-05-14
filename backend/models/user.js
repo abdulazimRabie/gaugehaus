@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         minlength: [11, "Phone number mmust have at least 11 digits."]
     },
     image: {
@@ -53,6 +53,7 @@ const UserSchema = new mongoose.Schema({
     about: {
         type: String
     },
+    birthDate: Date,
     likedEstates: [String],
     estates: [String],
     predictions: [{
@@ -62,7 +63,12 @@ const UserSchema = new mongoose.Schema({
     joinedAt: Date,
     changedPasswordAt: Date,
     resetOTP: String,
-    resetOTPExpiresAt: Date
+    resetOTPExpiresAt: Date,
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
+    }
 })
 
 UserSchema.pre("save", async function (next) {

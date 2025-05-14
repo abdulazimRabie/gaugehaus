@@ -1,5 +1,6 @@
 const axois = require("axios");
 const Prediction = require("../models/prediction");
+const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 
@@ -32,10 +33,10 @@ exports.predictPrice = catchAsync(async (req, res, next) => {
 
 exports.savePrediction = catchAsync(async (req, res, next) => {
     const { 
-        title, city, propertyType, furnished, deliveryTerm, bedrooms, bathrooms, area, level, price, owner
+        title, city, propertyType, furnished, deliveryTerm, bedrooms, bathrooms, area, level, price
     } = req.body;
 
-    if (!title || !city || !propertyType || !furnished || !deliveryTerm || !bedrooms || !bathrooms || !area || !level || !level || !price || !owner) {
+    if (!title || !city || !propertyType || !furnished || !deliveryTerm || !bedrooms || !bathrooms || !area || !level || !level || !price) {
         return next(new AppError("Please provide all required fields of prediction", 400))
     }
 
@@ -51,8 +52,11 @@ exports.savePrediction = catchAsync(async (req, res, next) => {
         level,
         price,
         pricePerSqm: req.body.pricePerSqm || price / area,
-        owner,
+        owner: req.user._id,
     })
+
+    req.user.predictions.push(prediction._id)
+    await req.user.save({ validateBeforeSave: false});
 
     res.status(201).json({
         status: "success",
