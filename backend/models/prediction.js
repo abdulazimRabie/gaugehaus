@@ -74,7 +74,6 @@ const PredictionSchema = new mongoose.Schema({
         ref: 'User',
         required: [true, "Prediction must be associated to a user"],
         select: false
-
     }
 },{ timestamps: true})
 
