@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require('path');
 const promisify = require("util").promisify;
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
@@ -6,6 +8,11 @@ const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const sendEmail = require("../utils/mail");
+
+// Load Emails
+// Load HTML templates
+const welcomeTemplate = fs.readFileSync(path.join(__dirname, '../views/emails/welcome.html'), 'utf8');
+const resetPasswordTemplate = fs.readFileSync(path.join(__dirname, '../views/emails/reset-password.html'), 'utf8');
 
 const signToken = (payload) => {
     return jwt.sign(payload, process.env.JWT_SECRET, {
@@ -25,16 +32,35 @@ exports.signup = catchAsync(async (req, res, next) => {
 
     // create jwt
     const token = signToken({email: req.body.email});
-
-    // send token
     newUser.password = undefined; // don't send password in response
-    res.status(201).json({
-        status: "success",
-        token,
-        data: {
-            user: newUser
-        }
-    })
+    
+    // send welcome email
+    try {
+        const html = welcomeTemplate.replace('{{username}}', newUser.name);
+        console.log(html)
+        await sendEmail({
+            email: newUser.email,
+            subject: "[GaugeHaus] : Welcome to GaugeHaus",
+            text: 
+            `
+            Hi ${newUser.name}
+            Thank you for joining GaugeHaus! We're excited to have you on board. Get started by exploring our platform and unlocking powerful features to enhance your experience.
+            `,
+            html: html
+        })
+        console.log('Email has been sent')
+
+        // send token
+        res.status(201).json({
+            status: "success",
+            token,
+            data: {
+                user: newUser
+            }
+        })
+    } catch (error) {
+        return next(new AppError("Something went wroing while creating profile, try again", 400));
+    }
 })
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -130,15 +156,17 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
     console.log("hashed OTP : ", user.resetOTP, user.resetOTPExpiresAt);
 
     try {
+        const html = resetPasswordTemplate.replace('{{username}}', user.name).replace('{{otp}}', resetOTP);
         await sendEmail({
             email,
             subject: "[GaugeHaus] : Reset Password OTP",
-            content: 
+            text: 
             `
             Reset OTP will be invalid in 10 minutes.
             Use the following OTP to reset password: ${resetOTP}.
             Please ignore this email if it is not you.
-            `
+            `,
+            html
         })
 
         res.status(200).json({

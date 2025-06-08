@@ -5,7 +5,7 @@ const Estate = require("../models/estate");
 const Like = require("../models/like");
 const catchAsync = require("../utils/catchAsync");
 const QueryHandler = require("../utils/apiFeatures");
-const AppError = require("../utisl/AppError");
+const AppError = require("../utils/AppError");
 
 // Utils
 const multerStorage = multer.memoryStorage();

@@ -3,7 +3,7 @@ const estateController = require("../controllers/estate");
 const authController = require("../controllers/authentication")
 const router = express.Router();
 
-router.post("/predict", estateController.predictPrice)
+// router.post("/predict", estateController.predictPrice)
 
 // Get: all estates
 // Post: sell new estate
@@ -17,7 +17,7 @@ router.route("/")
 
 // Get: single estate
 // Update, Delete: exist estate
-router.router("/:id")
+router.route("/:id")
     .get(authController.protect, estateController.getEstate)
     .patch(
         authController.protect,
