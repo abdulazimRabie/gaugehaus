@@ -22,24 +22,28 @@ const upload = multer({
     fileFilter: multerFilter,
 });
 
-exports.uploadEstateImages = upload.array('images', 10);
+exports.uploadEstateImages = upload.fields([{name: 'images', maxCount: 10}]);
 
 exports.processEstateImages = catchAsync(async(req, res, next) => {
     // handling iamges
-    req.body.images = [];
-
-    await Promise.all(
-        req.files.images.map(async (file, idx) => {
-            const imageName = `estate-${req.body.title}-${Date.now()}-${idx + 1}.jpeg`;
-
-            await sharp(file.buffer)
-                .resize(2000, 1333)
-                .toFormat("jpeg")
-                .toFile(`uploads/estates/${imageName}`)
-            
-            req.body.images.push(imageName);
-        })
-    );
+    console.log("Is process estates images running !!!!!!")
+    if (req.files.images) {
+        console.log("Uploading Images")
+        req.body.images = [];
+    
+        await Promise.all(
+            req.files.images.map(async (file, idx) => {
+                const imageName = `estate-${req.body.title || req.estate.title || 'untitled-estate'}-${Date.now()}-${idx + 1}.jpeg`;
+    
+                await sharp(file.buffer)
+                    .resize(2000, 1333)
+                    .toFormat("jpeg")
+                    .toFile(`uploads/estates/${imageName}`)
+                
+                req.body.images.push(imageName);
+            })
+        );
+    }
 
     next();
 });
@@ -77,6 +81,20 @@ exports.getEstate = catchAsync(async (req, res, next) => {
 })
 
 exports.getUserEstates = catchAsync( async (req, res, next) => {
+    const estates = await Estate.find({owner: req.params.id});
+
+    res.status(200).json({
+        status: "success",
+        results: estates.length,
+        data: {
+            estates
+        }
+    })
+})
+
+exports.getMyEstates = catchAsync( async (req, res, next) => {
+    console.log("======================================")
+    console.log(req.user);
     const estates = await Estate.find({owner: req.user._id});
 
     res.status(200).json({
@@ -97,7 +115,9 @@ exports.sellEstate = catchAsync(async (req, res, next) => {
 
     const estateData = {
         ...req.body,
-        owner: req.user._id
+        owner: req.user._id,
+        ownerName: req.user.name,
+        ownerImage: req.user.image
     }
 
     const newEstate = await Estate.create(estateData);
@@ -112,16 +132,24 @@ exports.sellEstate = catchAsync(async (req, res, next) => {
 
 exports.likeEstate = catchAsync(async (req, res, next) => {
     const estateId = req.params.id;
-    const estate = Estate.findById(estateId);
+    let estate = await Estate.findById(estateId);
+    let like = await Like.findOne({
+        estate: estateId,
+        user: req.user._id
+    })
 
     if (!estate) {
-        return next("No estate with this id .. it might be deleted!");
+        return next(new AppError("No estate with this id .. it might be deleted!", 400));
+    }
+
+    if (like) {
+        return next(new AppError("Cannot like same estate twice", 400));
     }
 
     estate.likes += 1;
     await estate.save({validateBeforeSave: false});
 
-    const newLike = await Like.create({
+    await Like.create({
         estate: estateId,
         user: req.user._id,
         likedAt: Date.now()
@@ -145,15 +173,17 @@ exports.dislikeEstate = catchAsync(async (req, res, next) => {
         return next(new AppError("You didn't like this estate before!"));
     }
 
-    const estate = await Estate.find({
+    const estate = await Estate.findOne({
         _id: req.params.id,
         owner: req.user.id
     })
 
+    console.log(estate);
+
     estate.likes -= 1;
     await estate.save({validateBeforeSave: false})
 
-    await Like.findByIdAndDelete(like._id);
+    await like.findByIdAndDelete(like._id);
 
     res.status(204).json({
         status: "success",
@@ -171,7 +201,6 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
         return next(new AppError("Can't find estate or it's not your estate!", 400));
     }
 
-    Estate.updateOne()
     const newEstate = await Estate.findByIdAndUpdate(
         {"_id": estateId}, 
         {$set : req.body}, 

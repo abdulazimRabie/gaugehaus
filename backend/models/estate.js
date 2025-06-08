@@ -74,6 +74,14 @@ const EstateSchema = new mongoose.Schema({
         ref: "User",
         required: [true, "Who does owen the estate ?"],
     },
+    ownerName: {
+        type: String,
+        required: [true, "Owner name is missing!"]
+    },
+    ownerImage: {
+        type: String,
+        default: 'avatar-user.png'
+    },
     likes: {
         type: Number,
         default: 0
@@ -82,5 +90,7 @@ const EstateSchema = new mongoose.Schema({
         type: [String]
     }
 })
+
+tourSchema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model("Estate", EstateSchema)

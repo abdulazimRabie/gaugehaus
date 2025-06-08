@@ -1,5 +1,6 @@
 const express = require("express");
 const estateController = require("../controllers/estate");
+const estateMiddleware = require("../middlewares/estate");
 const authController = require("../controllers/authentication")
 const router = express.Router();
 
@@ -15,19 +16,21 @@ router.route("/")
         estateController.processEstateImages,
         estateController.sellEstate)
 
+// Get: user's estates
+router.get("/my-estates", authController.protect, estateController.getMyEstates)
+router.get("/user/:id", authController.protect, estateController.getUserEstates)
+        
 // Get: single estate
 // Update, Delete: exist estate
 router.route("/:id")
     .get(authController.protect, estateController.getEstate)
     .patch(
         authController.protect,
+        estateMiddleware.estateChecker,
         estateController.uploadEstateImages,
         estateController.processEstateImages,
         estateController.updateEstate)
     .delete(authController.protect, estateController.deleteEstate)
-
-// Get: user's estates
-router.get("/my-estates", authController.protect, estateController.getUserEstates)
 
 // Post: like estate
 router.post("/like-estate/:id", authController.protect, estateController.likeEstate)
