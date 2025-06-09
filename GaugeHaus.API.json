@@ -8,7 +8,340 @@
 	"item": [
 		{
 			"name": "Estates",
-			"item": []
+			"item": [
+				{
+					"name": "All Estates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates?page=2&limit=1&sort=-likes&fields=name,likes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "-likes"
+								},
+								{
+									"key": "fields",
+									"value": "name,likes"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/6845d0b091aee9c890ed82e8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"6845d0b091aee9c890ed82e8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sell Estate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"TEST Estate\",\n    \"propertyType\": \"Apartment\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [30.0444, 31.2357],\n        \"address\": \"123 Nile Street\",\n        \"city\": \"Cairo\"\n    },\n    \"price\": 150000,\n    \"description\": \"A luxurious and fully furnished apartment in the heart of the city.\",\n    \"bedrooms\": 3,\n    \"bathrooms\": 2,\n    \"livingrooms\": 1,\n    \"kitchen\": 1,\n    \"area\": 200,\n    \"compoundName\": \"Nile Towers\",\n    \"furnished\": true,\n    \"deliveryDate\": \"2025-12-01\",\n    \"images\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/estates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Estate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/home/abdulazim/Desktop/estates/estate-1.jpeg"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/home/abdulazim/Desktop/estates/estate-2.jpeg"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/home/abdulazim/Desktop/estates/estate-3.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/estates/6845d0b091aee9c890ed82e8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"6845d0b091aee9c890ed82e8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/6845d299378113aca7a77637",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"6845d299378113aca7a77637"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User's Estates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/user/6845e85c50f60e9f3fecab8c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"user",
+								"6845e85c50f60e9f3fecab8c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dislike Estate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/dislike-estate/6845d299378113aca7a77637",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"dislike-estate",
+								"6845d299378113aca7a77637"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like Estate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/like-estate/6845d299378113aca7a77637",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"like-estate",
+								"6845d299378113aca7a77637"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Estate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/distance/500/lanlng/-3213.321,32132.31/unit/km",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"distance",
+								"500",
+								"lanlng",
+								"-3213.321,32132.31",
+								"unit",
+								"km"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nearest Estates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/nearest-estates/-11.098321683,32.099832651",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"nearest-estates",
+								"-11.098321683,32.099832651"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Estates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/estates/my-estates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"estates",
+								"my-estates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Users",
@@ -85,13 +418,14 @@
 						"method": "PATCH",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"about\": \"We are a super team\",\n    \"location\": \"Cairo\",\n    \"phoneNumber\": \"01123456789\",\n    \"birthDate\": \"2003-04-04\",\n    \"username\": \"new-user-name\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/abdulazim/Main/Projects/tours/public/img/users/user-1.jpg"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/users/updateMe",
@@ -110,14 +444,25 @@
 				{
 					"name": "Delete Me",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/deleteMe",
+							"raw": "{{url}}/users/deleteMe",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"users",
 								"deleteMe"
 							]
 						}
@@ -385,13 +730,34 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"azim\",\n    \"email\": \"azim@rabie.com\",\n    \"password\": \"pass1234\",\n    \"confirmedPassword\": \"pass1234\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Mai Abdelazim",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "abdulazim.rabie.abdulhafiz@outlook.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass1234",
+									"type": "text"
+								},
+								{
+									"key": "confirmedPassword",
+									"value": "pass1234",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/abdulazim/Downloads/GaugeHaus(3)(1).png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/auth/signin",
@@ -426,7 +792,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"azim@rabie.com\",\n    \"password\": \"pass1234\"\n}",
+							"raw": "{\n    \"email\": \"abdulazem.rabie@gmail.com\",\n    \"password\": \"pass1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -454,7 +820,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"azim@rabie.com\"\n}",
+							"raw": "{\n    \"email\": \"abdulazem.rabie@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

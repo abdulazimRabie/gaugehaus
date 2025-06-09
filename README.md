@@ -1,6 +1,9 @@
 # GaugeHaus
 GaugeHaus is a real estate system that allows users to sell their estates and communicate with brokers. Also, users can demestify the estate price by using prediction feature provided in the system to avoid price manipulation and stop making it fuzzy.
 
+## API
+[API Endpoints](https://interstellar-station-253901.postman.co/workspace/My-Workspace~54f05959-cf13-4cf4-8845-b86a42e8c26f/collection/31592980-32f95e8f-6b17-46b9-9ab4-ff94a2910b18?action=share&creator=31592980&active-environment=31592980-f11cbdea-6b0a-4fb3-a603-a3bb03ae60cc)
+
 ## Installation
 
 ### Prerequisites
