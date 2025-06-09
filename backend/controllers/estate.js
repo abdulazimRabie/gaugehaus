@@ -6,6 +6,7 @@ const Like = require("../models/like");
 const catchAsync = require("../utils/catchAsync");
 const QueryHandler = require("../utils/apiFeatures");
 const AppError = require("../utils/AppError");
+const cloudinary = require("../utils/cloudinary");
 
 // Utils
 const multerStorage = multer.memoryStorage();
@@ -27,20 +28,38 @@ exports.uploadEstateImages = upload.fields([{name: 'images', maxCount: 10}]);
 exports.processEstateImages = catchAsync(async(req, res, next) => {
     // handling iamges
     console.log("Is process estates images running !!!!!!")
+
     if (req.files.images) {
-        console.log("Uploading Images")
+        console.log("Processing and uploading estate images");
         req.body.images = [];
-    
+
         await Promise.all(
             req.files.images.map(async (file, idx) => {
-                const imageName = `estate-${req.body.title || req.estate.title || 'untitled-estate'}-${Date.now()}-${idx + 1}.jpeg`;
-    
-                await sharp(file.buffer)
+                const imageName = `estate-${req.body.title || req.estate.title || 'untitled-estate'}-${Date.now()}-${idx + 1}`;
+
+                // Process the image with sharp
+                const processedImage = await sharp(file.buffer)
                     .resize(2000, 1333)
                     .toFormat("jpeg")
-                    .toFile(`uploads/estates/${imageName}`)
-                
-                req.body.images.push(imageName);
+                    .toBuffer();
+
+                // Upload to Cloudinary
+                const result = await new Promise((resolve, reject) => {
+                    const uploadStream = cloudinary.uploader.upload_stream(
+                        {
+                            folder: 'estates',
+                            public_id: imageName,
+                            format: 'jpeg',
+                        },
+                        (error, result) => {
+                            if (error) reject(new Error(`Cloudinary upload failed: ${error.message}`));
+                            resolve(result);
+                        }
+                    );
+                    uploadStream.end(processedImage);
+                });
+
+                req.body.images.push(result.secure_url);
             })
         );
     }
@@ -196,6 +215,8 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
     const userId = req.user._id;
 
     const estate = await Estate.find({_id: estateId, owner: userId});
+
+    console.log(req.body);
 
     if (!estate) {
         return next(new AppError("Can't find estate or it's not your estate!", 400));

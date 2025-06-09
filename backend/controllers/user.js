@@ -2,6 +2,7 @@ const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 
+// Utils
 function filterFields(rawFields, allowedFields) {
     const updateObject = {};
     allowedFields.forEach(field => {
@@ -13,6 +14,7 @@ function filterFields(rawFields, allowedFields) {
     return updateObject
 }
 
+// Controllers
 exports.getAllUsers = catchAsync(async (req, res, next) => {
     const users = await User.find({active: true});
 
@@ -58,7 +60,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     }
 
     // filter fields to be changed
-    const allowedFields = ["name", "username", "location", "phoneNumber", "about"]
+    const allowedFields = ["name", "username", "location", "phoneNumber", "about", "image"]
     const updateObject = filterFields(req.body, allowedFields);
 
     console.log('UPDATED OBJECT : ', updateObject);

@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: "avatar_default.jpg"
+        default: "https://res.cloudinary.com/drkl7n6e1/image/upload/v1749425075/default-avatar_pjasaa.png"
     },
     about: {
         type: String

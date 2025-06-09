@@ -1,9 +1,13 @@
 const express = require("express");
 const authcontroller = require("../controllers/authentication");
+const uploadImage = require("../utils/uploadUserImage");
 const router = express.Router();
 
 // Sign in
-router.post("/signin", authcontroller.signup);
+router.post("/signin", 
+    uploadImage.uploadUserImage,
+    uploadImage.processUserImage,
+    authcontroller.signup);
 
 // Login
 router.post("/login", authcontroller.login);

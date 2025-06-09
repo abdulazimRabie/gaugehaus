@@ -91,6 +91,6 @@ const EstateSchema = new mongoose.Schema({
     }
 })
 
-tourSchema.index({ location: '2dsphere' });
+EstateSchema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model("Estate", EstateSchema)

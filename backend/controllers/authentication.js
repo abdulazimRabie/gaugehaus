@@ -27,7 +27,8 @@ exports.signup = catchAsync(async (req, res, next) => {
         email: req.body.email, 
         password: req.body.password,
         confirmedPassword: req.body.confirmedPassword,
-        changedPasswordAt: req.body.changedPasswordAt
+        changedPasswordAt: req.body.changedPasswordAt,
+        image: req.body.image || 'avatar-user.jpeg'
     })
 
     // create jwt
