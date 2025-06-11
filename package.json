@@ -1,6 +1,12 @@
 {
   "scripts": {
-    "start": "npx nodemon server.js"
+    "start": "node index",
+    "start-dev": "npx nodemon index",
+    "vercel-start": "node index"
+  },
+  "author": "a.azim",
+  "engines": {
+    "node": "22.14.0"
   },
   "dependencies": {
     "axios": "^1.9.0",

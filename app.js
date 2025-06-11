@@ -17,6 +17,12 @@ app.use("/api/users", usersRouter);
 app.use("/api/predictions", predictionRouter);
 app.use("/api/likes", likeRouter);
 
+app.get("/welcome", (req, res) => {
+    res.status(200).json({
+        "welcome": "welcome man!"
+    })
+})
+
 // Error handling
 app.use(globalErrorHandler);
 
