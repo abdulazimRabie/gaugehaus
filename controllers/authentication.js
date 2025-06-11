@@ -22,14 +22,18 @@ const signToken = (payload) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
     // create user
-    const newUser = await User.create({
+    let newUser = {
         name: req.body.name, 
         email: req.body.email, 
         password: req.body.password,
         confirmedPassword: req.body.confirmedPassword,
-        changedPasswordAt: req.body.changedPasswordAt,
-        image: req.body.image || 'avatar-user.jpeg'
-    })
+        changedPasswordAt: req.body.changedPasswordAt
+    };
+
+    if (req.body.images)
+        newUser.images = req.body.images;
+
+    newUser = await User.create(newUser);
 
     // create jwt
     const token = signToken({email: req.body.email});
