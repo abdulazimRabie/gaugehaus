@@ -204,7 +204,6 @@ exports.dislikeEstate = catchAsync(async (req, res, next) => {
 
   const estate = await Estate.findOne({
     _id: req.params.id,
-    owner: req.user.id,
   });
 
   if (!estate) {
