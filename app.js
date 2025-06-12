@@ -1,4 +1,3 @@
-const fs = require("fs");
 const express = require("express");
 const globalErrorHandler = require("./controllers/error");
 const estateRouter = require("./routes/estate");
