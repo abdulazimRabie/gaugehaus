@@ -58,6 +58,9 @@ router.post(
   estateController.dislikeEstate,
 );
 
+// Post: liked estates by user
+router.get('/liked-estates/:userId', authController.protect, estateController.getLikedEstates)
+
 // Get: Search estate within
 // /estates/within/:distance/center/:latlng/unit/:unit
 // Estate.find({location: {$getWithin: {$centerSphere: [[lat, lng], radius]} } })

@@ -1,4 +1,5 @@
 const axios = require("axios");
+const mongoose = require("mongoose");
 const multer = require("multer");
 const sharp = require("sharp");
 const Estate = require("../models/estate");
@@ -26,7 +27,7 @@ exports.processEstateImages = catchAsync(async (req, res, next) => {
   // handling iamges
   console.log("Is process estates images running !!!!!!");
 
-  if (req.files.images) {
+  if (req.files && req.files.images) {
     console.log("Processing and uploading estate images");
     req.body.images = [];
 
@@ -223,6 +224,48 @@ exports.dislikeEstate = catchAsync(async (req, res, next) => {
   });
 });
 
+async function getUserLikedEstates(userId) {
+  try {
+    // 1. Find all likes for the given userId
+    const likes = await Like.find({ user: userId });
+
+    // 2. Extract estateIds from likes
+    const estateIds = likes.map(like => like.estate);
+
+    // 3. Query Estates collection for estates with matching IDs
+    const estates = await Estate.find({ 
+      _id: { $in: estateIds }
+    }).select('title area location images').lean();
+
+    return estates;
+  } catch (error) {
+    console.error('Error fetching liked estates:', error);
+    throw error;
+  }
+}
+
+exports.getLikedEstates = async (req, res) => {
+  console.log("This user likes these estates ")
+  try {
+    const userId = req.params.userId;
+    
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+
+    const estates = await getUserLikedEstates(userId);
+    res.status(200).json({
+      status: "success",
+      data: {
+        "liked estates": estates
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 exports.updateEstate = catchAsync(async (req, res, next) => {
   const estateId = req.params.id;
   const userId = req.user._id;
@@ -250,7 +293,7 @@ exports.updateEstate = catchAsync(async (req, res, next) => {
   const newEstate = await Estate.findByIdAndUpdate(
     { _id: estateId },
     { $set: req.body },
-    { new: true, runValidators: true },
+    { new: true, runValidators: false },
   );
 
   res.status(200).json({
