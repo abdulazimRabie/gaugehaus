@@ -1,3 +1,5 @@
+const fs = require('fs').promises;
+const path = require('path');
 const express = require("express");
 const globalErrorHandler = require("./controllers/error");
 const estateRouter = require("./routes/estate");
@@ -5,6 +7,7 @@ const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/user");
 const predictionRouter = require("./routes/prediction");
 const likeRouter = require("./routes/like");
+const swaggerUi = require('swagger-ui-express');
 const app = express();
 
 // Middlewares
@@ -22,6 +25,10 @@ app.get("/welcome", (req, res) => {
         "welcome": "welcome man!"
     })
 })
+
+// API Endpoints
+const swaggerDocument = require('./endpoints.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error handling
 app.use(globalErrorHandler);
