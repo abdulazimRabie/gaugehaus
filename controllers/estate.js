@@ -331,7 +331,7 @@ exports.getEstatesWithin = catchAsync(async (req, res, next) => {
 
   const radius = unit == "mi" ? distance / 3963.2 : distance / 6378.1;
 
-  const tours = await Estate.find({
+  const estates = await Estate.find({
     location: {
       $geoWithin: { $centerSphere: [[lng, lat], radius] },
     },
@@ -341,9 +341,9 @@ exports.getEstatesWithin = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    results: tours.length,
+    results: estates.length,
     data: {
-      tours,
+      estates,
     },
   });
 });
