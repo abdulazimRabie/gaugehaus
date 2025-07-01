@@ -329,7 +329,7 @@ exports.getEstatesWithin = catchAsync(async (req, res, next) => {
   console.log(req.params);
   const [lat, lng] = latlng.split(",");
 
-  const radius = unit == "mi" ? distance / 3963.2 : distance / 6378.1;
+  const radius = unit == "mi" ? distance / 3963.2 : distance / 6378.1; // radius in radians e.g. 5 km radius : 5 / 6378.1 in radians
 
   const estates = await Estate.find({
     location: {

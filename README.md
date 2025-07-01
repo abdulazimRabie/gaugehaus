@@ -2,7 +2,7 @@
 GaugeHaus is a real estate system that allows users to sell their estates and communicate with brokers. Also, users can demestify the estate price by using prediction feature provided in the system to avoid price manipulation and stop making it fuzzy.
 
 ## API
-[API Endpoints](https://interstellar-station-253901.postman.co/workspace/My-Workspace~54f05959-cf13-4cf4-8845-b86a42e8c26f/collection/31592980-32f95e8f-6b17-46b9-9ab4-ff94a2910b18?action=share&creator=31592980&active-environment=31592980-f11cbdea-6b0a-4fb3-a603-a3bb03ae60cc)
+Check all endpoints and test it through : [Postman Collection](https://www.postman.com/interstellar-station-253901/real-estate-software/collection/k3kk64t/gaugehaus)
 
 ## Installation
 
@@ -10,7 +10,7 @@ GaugeHaus is a real estate system that allows users to sell their estates and co
 
 * [Node.js](https://nodejs.org/) (v14 or higher)
 * [MongoDB](https://www.mongodb.com/) (local or cloud instance)
-* [Python](https://www.python.org/) (v3.8 or higher)
+* Signin Coludinary and get API key for configuration.
 
 ### Steps
 
@@ -18,7 +18,7 @@ GaugeHaus is a real estate system that allows users to sell their estates and co
 
    ```bash
    git clone https://github.com/abdulazimRabie/gaugehaus.git
-   cd gaugehaus/backend
+   cd gaugehaus
    ```
 
 2. **Install Node.js dependencies**:
@@ -43,49 +43,28 @@ GaugeHaus is a real estate system that allows users to sell their estates and co
 
    The server should now be running at `http://localhost:3001`.
 
-5. **Set up Python environment for machine learning models**:
-
-   Navigate to the `model` directory:
-
-   ```bash
-   cd ../model
-   ```
-
-   Install Python dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-   Ensure that the machine learning model files are in place for predictions.
-
 ## Project Structure
 
 ```
 gaugehaus/
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   ├── app.js
-│   ├── server.js
-│   └── .env
-├── model/
-│   ├── prediction_model.pkl
-│   ├── predict.py
-│   └── requirements.txt
+├── controllers/
+├── models/
+├── routes/
+├── utils/
+├── public/
+├── app.js
+├── index.js
+└── .env
 ├── locations.json
 └── README.md
 ```
 
 ## Some API Endpoints
 
-* `POST /api/users/signin` - Register a new user
-* `POST /api/users/login` - Authenticate a user
-* `GET /api/predictions` - Retrieve all saved predictions
-* `GET /api/users` - Retrieve all users
-* `POST /api/predictions/predictPrice` - Get price prediction for a property
+* `/api/users/ ... ` to handle user functions.
+* `/api/estates/ ... ` to handle estate functions.
+* `/api/auth/ ... ` to handle user authentication.
+* `/api/predictions/ ... ` to handle predicted prices.
 
 *Note: Ensure to include authentication tokens where required.*
 
